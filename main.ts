@@ -1,7 +1,15 @@
+let calibrated = false
+let calibrationBegan = false
 let vteriny = 0
 let lightLevel = 0
-let calibrated = false
-function spustitKalibraci() {
+input.onButtonPressed(Button.A, function () {
+    spustitKalibraci()
+})
+function spustitKalibraci () {
+    calibrated = false
+    led.stopAnimation()
+    music.stopAllSounds()
+    calibrationBegan = true
     vteriny = 5
     while (vteriny > 0) {
         basic.showNumber(vteriny)
@@ -12,15 +20,12 @@ function spustitKalibraci() {
     calibrated = true
 }
 basic.forever(function () {
-    // basic.showString("Umistete zdroj svetla na pozici. Pote stisknete leve tlacitko a behem 10 sekund umistete microbit ke zdroji svetla. Pote probehne kalibrace a svetelna bude pripravena")
-    if (input.buttonIsPressed(Button.A)) {
-        spustitKalibraci()
-    }
     if (calibrated == true && (input.lightLevel() > lightLevel + 20 || input.lightLevel() < lightLevel - 20)) {
-        serial.writeLine("ulozeny: " + lightLevel.toString())
-        serial.writeLine("aktualni: " + input.lightLevel().toString())
-
-        basic.showIcon(IconNames.Sad)
-        basic.pause(5000)
+        basic.showIcon(IconNames.Angry)
+        music.playMelody("F G F G F G F G ", 200)
+    } else if (calibrationBegan == false) {
+        basic.showString("Zkalibrujte senzor!")
+    } else if (calibrated == true) {
+        basic.showIcon(IconNames.Happy)
     }
 })
