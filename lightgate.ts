@@ -7,7 +7,7 @@
 /**
  * Custom blocks
  */
-//% weight=100 color=#25E422 icon="\uf030"
+//% weight=100 color=#a0a803 icon="\uf030"
 namespace Svetelna_Brana {
     let toleration = 0
     let calibrated = false
