@@ -54,31 +54,7 @@ namespace SvetelnaBrana {
         })
     }
 
-    /**
-    * Zkontroluje hladinu světla
-    */
-    //% block="Při vrácení do normální polohy"
-    export function onLightBackInNormal(action: () => void) {
-        const myEventID = 111 + Math.randomRange(0, 100); // semi-unique
 
-        control.onEvent(myEventID, 0, function () {
-            control.inBackground(() => {
-                action()
-            })
-        })
-
-        control.inBackground(() => {
-            while (true) {
-                let measuredLight = input.lightLevel();
-                if (lightLevelDrop && (!(measuredLight > lightLevel + toleration) && !(measuredLight < lightLevel - toleration))) {
-                    lightLevelDrop = false
-                    control.raiseEvent(myEventID, 1)
-                }
-                basic.pause(20)
-
-            }
-        })
-    }
 
     
 
