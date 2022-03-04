@@ -1,8 +1,3 @@
-/**
- * Použijte tento soubor k definování personalizovaných funkcí a bloků.
- * Přečtěte si více na https://makecode.microbit.org/blocks/custom
- */
-
 
 /**
  * Custom blocks
@@ -25,7 +20,6 @@ namespace SvetelnaBrana {
             sumOfMeasures += input.lightLevel()
         }
         lightLevel = Math.round(sumOfMeasures / 10)
-        serial.writeLine("" + lightLevel)
         toleration = tol;
     }
 
@@ -53,11 +47,6 @@ namespace SvetelnaBrana {
             }
         })
     }
-
-
-
-    
-
 
 
 
