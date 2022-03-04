@@ -1,19 +1,5 @@
-Svetelna_Brana.OnLightBackInNormal(function () {
-    basic.showLeds(`
-        . # . # .
-        . # . # .
-        . . . . .
-        # . . . #
-        . # # # .
-        `)
+SvetelnaBrana.onLightDrop(function () {
+    music.setVolume(50)
+    music.playTone(988, music.beat(BeatFraction.Whole))
 })
-Svetelna_Brana.OnLightDrop(function () {
-    basic.showLeds(`
-        . . . . .
-        . # . # .
-        . . . . .
-        . # # # .
-        . # . # .
-        `)
-})
-Svetelna_Brana.SpustitKalibraci(50)
+SvetelnaBrana.spustitKalibraci(50)
