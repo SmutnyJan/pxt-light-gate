@@ -24,7 +24,7 @@ namespace SvetelnaBrana {
         for (let i = 0; i < 10; i++) {
             sumOfMeasures += input.lightLevel()
         }
-        lightLevel = Math.round(input.lightLevel() / 10)
+        lightLevel = Math.round(sumOfMeasures / 10)
         toleration = tol;
     }
 
