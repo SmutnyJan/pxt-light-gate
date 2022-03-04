@@ -1,1 +1,13 @@
-<xml xmlns="https://developers.google.com/blockly/xml"><block type="pxt-on-start" id="P9J%`J[K)RUs8OPuGp(l" x="0" y="0"><statement name="HANDLER"><block type="Svetelna_Brana_NastavitToleranci" id="Sj8D~n3@5D0x+[`bZ=Z;"><value name="tolerace"><shadow type="math_number" id="lFa^2fsDfUF0kPS$~~Qp"><field name="NUM">25</field></shadow></value></block></statement></block><block type="device_button_event" id="fE0HnS{tSI~iSRJ]5*%t" x="378" y="14"><field name="NAME">Button.A</field><statement name="HANDLER"><block type="Svetelna_Brana_SpustitKalibraci" id=",/S4CVSbrPP]h{wM%u:6"><value name="cas"><shadow type="math_number" id="=#oO-0|8z#o@-$g;OGE,"><field name="NUM">3</field></shadow></value></block></statement></block><block type="device_forever" id="LvG5rsT#A;/*EvTk.!|3" x="7" y="201"><statement name="HANDLER"><block type="Svetelna_Brana_ProvedKontrolu" id="XO(}]a9czFoi@xLl)L{r"/></statement></block></xml>
+<xml xmlns="https://developers.google.com/blockly/xml"><block type="pxt-on-start" id=",#1LR;GpDZYL!);~ab/p" x="0" y="0"><statement name="HANDLER"><block type="Svetelna_Brana_SpustitKalibraci" id="5~i-;nRcestE!5ru#7Cf"><value name="tol"><shadow type="math_number" id=";.$z4g|NxXxh@u6fL1@$"><field name="NUM">50</field></shadow></value></block></statement></block><block type="Svetelna_Brana_OnLightBackInNormal" id="ORx^vA|{XjLq@3X$Dw?5" x="367" y="181"><statement name="HANDLER"><block type="device_show_leds" id="a:|+8L[,g+-tbrMD`e(D"><field name="LEDS">`
+        . # . # . 
+        . # . # . 
+        . . . . . 
+        # . . . # 
+        . # # # .
+        `</field></block></statement></block><block type="Svetelna_Brana_OnLightDrop" id="dq=FTRWE0IQ^%c%1hzA7" x="39" y="230"><statement name="HANDLER"><block type="device_show_leds" id="Zwpm}NBT3U%`Cg9W9IT8"><field name="LEDS">`
+        . . . . . 
+        . # . # . 
+        . . . . . 
+        . # # # . 
+        . # . # .
+        `</field></block></statement></block></xml>

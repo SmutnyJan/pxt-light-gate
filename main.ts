@@ -1,7 +1,19 @@
-input.onButtonPressed(Button.A, function () {
-    Svetelna_Brana.SpustitKalibraci(3)
+Svetelna_Brana.OnLightBackInNormal(function () {
+    basic.showLeds(`
+        . # . # .
+        . # . # .
+        . . . . .
+        # . . . #
+        . # # # .
+        `)
 })
-Svetelna_Brana.NastavitToleranci(25)
-basic.forever(function () {
-    Svetelna_Brana.ProvedKontrolu()
+Svetelna_Brana.OnLightDrop(function () {
+    basic.showLeds(`
+        . . . . .
+        . # . # .
+        . . . . .
+        . # # # .
+        . # . # .
+        `)
 })
+Svetelna_Brana.SpustitKalibraci(50)

@@ -10,59 +10,68 @@
 //% weight=100 color=#a0a803 icon="\uf030"
 namespace Svetelna_Brana {
     let toleration = 0
-    let calibrated = false
-    let calibrationBegan = false
     let lightLevel = 0
+    let lightLevelDrop = false
 
-    /**
-    * Nastaví novou toleraci
-    */
-    //% block="Nastav toleranci %tolerace"
-
-    export function NastavitToleranci(tol: number): void {
-        toleration = tol;
-    }
 
     /**
     * Spustí kalibraci
     */
-    //% block="Zkalibruj za %cas vteřin"
+    //% block="Zkalibruj a nastav toleranci %tol"
 
-    export function SpustitKalibraci(seconds: number): void {
-        calibrated = false
-        led.stopAnimation()
-        music.stopAllSounds()
-        calibrationBegan = true
-        while (seconds > 0) {
-            basic.showNumber(seconds)
-            basic.pause(1000)
-            seconds += -1
-        }
+    export function SpustitKalibraci(tol: number): void {
         lightLevel = input.lightLevel()
-        calibrated = true
+        toleration = tol;
+
+    }
+
+    /**
+    * Zkontroluje, jestli došlo k porušení hladiny světla
+    */
+    //% block="Při porušení hladiny světla"
+    export function OnLightDrop(action: () => void) {
+        const myEventID = 111 + Math.randomRange(0, 100); // semi-unique
+
+        control.onEvent(myEventID, 0, function () {
+            control.inBackground(() => {
+                action()
+            })
+        })
+
+        control.inBackground(() => {
+            while (true) {
+                if (input.lightLevel() > lightLevel + toleration || input.lightLevel() < lightLevel - toleration) {
+                    lightLevelDrop = true
+                    control.raiseEvent(myEventID, 1)
+                }
+            }
+        })
     }
 
     /**
     * Zkontroluje hladinu světla
     */
-    //% block="Proveď kontrolu"
+    //% block="Při vrácení do normální polohy"
+    export function OnLightBackInNormal(action: () => void) {
+        const myEventID = 111 + Math.randomRange(0, 100); // semi-unique
 
-    export function ProvedKontrolu(): void {
-        if (calibrated == true && (input.lightLevel() > lightLevel + toleration || input.lightLevel() < lightLevel - toleration)) {
-            basic.showIcon(IconNames.Angry)
-            music.playMelody("F G F G F G F G ", 200)
-        } else if (calibrationBegan == false) {
-            basic.showString("Zkalibrujte senzor!")
-        } else if (calibrated == true) {
-            basic.showIcon(IconNames.Happy)
-        }
+        control.onEvent(myEventID, 0, function () {
+            control.inBackground(() => {
+                action()
+            })
+        })
+
+        control.inBackground(() => {
+            while (true) {
+                if (lightLevelDrop && (!(input.lightLevel() > lightLevel + toleration) && !(input.lightLevel() < lightLevel - toleration))) {
+                    lightLevelDrop = false
+                    control.raiseEvent(myEventID, 1)
+                }
+            }
+        })
     }
 
-
-
-
-
-
+    
 
 
 
