@@ -1,16 +1,11 @@
-
-/**
- * Custom blocks
- */
-//% weight=100 color=#a0a803 icon="\uf030"
+//% weight=100 color=#a0a803 icon="\uf030" block="Světelná brána"
 namespace SvetelnaBrana {
     let toleration = 0
     let lightLevel = 0
-    let lightLevelDrop = false
-
+    let actionLock = false
 
     /**
-    * Spustí kalibraci
+    * Spustí kalibraci a nastaví toleranci
     */
     //% block="Zkalibruj a nastav toleranci %tol"
 
@@ -32,15 +27,17 @@ namespace SvetelnaBrana {
 
         control.onEvent(myEventID, 0, function () {
             control.inBackground(() => {
+                actionLock = true
                 action()
+                actionLock = false
+
             })
         })
 
         control.inBackground(() => {
             while (true) {
                 let measuredLight = input.lightLevel();
-                if (measuredLight > lightLevel + toleration || measuredLight < lightLevel - toleration) {
-                    lightLevelDrop = true
+                if (!actionLock && (measuredLight > lightLevel + toleration || measuredLight < lightLevel - toleration)) {
                     control.raiseEvent(myEventID, 1)
                 }               
                 basic.pause(20)
