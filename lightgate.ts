@@ -24,7 +24,7 @@ namespace SvetelnaBrana {
     * @akce Různé příkazy které se provedou, pokud dojde k porušení hladiny světla
     */
     //% block="Při porušení hladiny světla"
-    export function onLightDrop(akce: () => void) {
+    export function kdyzPoruseniHladiny(akce: () => void) {
         const eventID = 111 + Math.randomRange(0, 100);
 
         control.onEvent(eventID, 0, function () {
