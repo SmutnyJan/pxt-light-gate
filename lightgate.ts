@@ -1,44 +1,46 @@
 //% weight=100 color=#a0a803 icon="\uf030" block="Světelná brána"
 namespace SvetelnaBrana {
-    let toleration = 0
-    let lightLevel = 0
-    let actionLock = false
+    let tolerance = 0
+    let hladinaSvetla = 0
+    let zamekMetody = false
 
     /**
     * Spustí kalibraci a nastaví toleranci
+    * @tol Směr, do kterého se má kurzor pohnout
     */
     //% block="Zkalibruj a nastav toleranci %tol"
 
     export function spustitKalibraci(tol: number): void {
-        let sumOfMeasures = 0;
+        let sumaMereni = 0;
         for (let i = 0; i < 10; i++) {
-            sumOfMeasures += input.lightLevel()
+            sumaMereni += input.lightLevel()
         }
-        lightLevel = Math.round(sumOfMeasures / 10)
-        toleration = tol;
+        hladinaSvetla = Math.round(sumaMereni / 10)
+        tolerance = tol;
     }
 
     /**
     * Zkontroluje, jestli došlo k porušení hladiny světla
+    * @akce Různé příkazy které se provedou, pokud dojde k porušení hladiny světla
     */
     //% block="Při porušení hladiny světla"
-    export function onLightDrop(action: () => void) {
-        const myEventID = 111 + Math.randomRange(0, 100); // semi-unique
+    export function onLightDrop(akce: () => void) {
+        const eventID = 111 + Math.randomRange(0, 100);
 
-        control.onEvent(myEventID, 0, function () {
+        control.onEvent(eventID, 0, function () {
             control.inBackground(() => {
-                actionLock = true
-                action()
-                actionLock = false
+                zamekMetody = true
+                akce()
+                zamekMetody = false
 
             })
         })
 
         control.inBackground(() => {
             while (true) {
-                let measuredLight = input.lightLevel();
-                if (!actionLock && (measuredLight > lightLevel + toleration || measuredLight < lightLevel - toleration)) {
-                    control.raiseEvent(myEventID, 1)
+                let namerenaHladinaSvetla = input.lightLevel();
+                if (!zamekMetody && (namerenaHladinaSvetla > hladinaSvetla + tolerance || namerenaHladinaSvetla < hladinaSvetla - tolerance)) {
+                    control.raiseEvent(eventID, 1)
                 }               
                 basic.pause(20)
             }
