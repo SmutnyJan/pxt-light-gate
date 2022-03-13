@@ -9,6 +9,7 @@ namespace SvetelnaBrana {
     * @tol Směr, do kterého se má kurzor pohnout
     */
     //% block="Zkalibruj a nastav toleranci %tol"
+    //% tol.min=0 tol.max=255
 
     export function spustitKalibraci(tol: number): void {
         let sumaMereni = 0;
