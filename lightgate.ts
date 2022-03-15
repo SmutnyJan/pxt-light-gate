@@ -1,46 +1,46 @@
 //% weight=100 color=#a0a803 icon="\uf030" block="Světelná brána"
-namespace SvetelnaBrana {
-    let tolerance = 0
-    let hladinaSvetla = 0
-    let zamekMetody = false
+namespace lightGate {
+    let toleration = 0
+    let lightLevel = 0
+    let methodLock = false
 
     /**
     * Spustí kalibraci a nastaví toleranci
-    * @tol Směr, do kterého se má kurzor pohnout
+    * @tol Tolerance hladiny světla (0-255)
     */
     //% block="Zkalibruj a nastav toleranci %tol"
     //% tol.min=0 tol.max=255
 
-    export function spustitKalibraci(tol: number): void {
-        let sumaMereni = 0;
+    export function calibrate(tol: number): void {
+        let sumOfMeasurements = 0;
         for (let i = 0; i < 10; i++) {
-            sumaMereni += input.lightLevel()
+            sumOfMeasurements += input.lightLevel()
         }
-        hladinaSvetla = Math.round(sumaMereni / 10)
-        tolerance = tol;
+        lightLevel = Math.round(sumOfMeasurements / 10)
+        toleration = tol;
     }
 
     /**
     * Zkontroluje, jestli došlo k porušení hladiny světla
-    * @akce Různé příkazy které se provedou, pokud dojde k porušení hladiny světla
+    * @action Různé příkazy které se provedou, pokud dojde k porušení hladiny světla
     */
     //% block="Při porušení hladiny světla"
-    export function kdyzPoruseniHladiny(akce: () => void) {
+    export function onLightLevelDrop(action: () => void) {
         const eventID = 111 + Math.randomRange(0, 100);
 
         control.onEvent(eventID, 0, function () {
             control.inBackground(() => {
-                zamekMetody = true
-                akce()
-                zamekMetody = false
+                methodLock = true
+                action()
+                methodLock = false
 
             })
         })
 
         control.inBackground(() => {
             while (true) {
-                let namerenaHladinaSvetla = input.lightLevel();
-                if (!zamekMetody && (namerenaHladinaSvetla > hladinaSvetla + tolerance || namerenaHladinaSvetla < hladinaSvetla - tolerance)) {
+                let measuredLightLevel = input.lightLevel();
+                if (!methodLock && (measuredLightLevel > lightLevel + toleration || measuredLightLevel < lightLevel - toleration)) {
                     control.raiseEvent(eventID, 1)
                 }               
                 basic.pause(20)
