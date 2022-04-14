@@ -26,6 +26,15 @@ function onLightLevelDrop(action: () => void)
     - metoda (delegát)
 - Bez návratové hodnoty
 
+##Enumy
+```
+enum Deviation {
+    Small = 10,
+    Medium  = 20,
+    Large = 30,
+}
+```
+
 ## Příklady
 
 ### Světelná brána bez zapínání/vypínání
