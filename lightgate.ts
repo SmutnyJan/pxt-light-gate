@@ -1,6 +1,16 @@
+enum Deviation {
+    //% block="Malá"
+    Small = 10,
+    //% block="Střední"
+    Medium  = 20,
+    //% block="Velká"
+    Large = 30,
+
+}
+
 //% weight=100 color=#a0a803 icon="\uf030" block="Světelná brána"
 namespace lightGate {
-    let toleration = 0
+    let toleration = Deviation.Medium
     let lightLevel = 0
     let methodLock = false
 
@@ -11,13 +21,13 @@ namespace lightGate {
     //% block="Zkalibruj a nastav toleranci %tol"
     //% tol.min=0 tol.max=255
 
-    export function calibrate(tol: number): void {
+    export function calibrate(dev: Deviation): void {
         let sumOfMeasurements = 0;
         for (let i = 0; i < 10; i++) {
             sumOfMeasurements += input.lightLevel()
         }
         lightLevel = Math.round(sumOfMeasurements / 10)
-        toleration = tol;
+        toleration = dev;
     }
 
     /**
