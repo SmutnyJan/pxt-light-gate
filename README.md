@@ -26,7 +26,7 @@ function onLightLevelDrop(action: () => void)
     - metoda (delegát)
 - Bez návratové hodnoty
 
-##Enumy
+## Enumy
 ```
 enum Deviation {
     Small = 10,
